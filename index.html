@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Whiteboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main id="workspace">
+        <canvas id="canvas" aria-label="Whiteboard"></canvas>
+    </main>
+
+    <aside id="style-panel" class="style-panel" aria-label="Style controls" hidden>
+        <section class="style-section" data-style-group="stroke">
+            <h2 data-style-heading="stroke">Stroke</h2>
+            <div class="style-options color-options" role="group" aria-label="Stroke color">
+                <button class="color-swatch active" type="button" data-style-property="stroke" data-style-value="#1e1e1e" aria-label="Black"></button>
+                <button class="color-swatch" type="button" data-style-property="stroke" data-style-value="#e03131" aria-label="Red"></button>
+                <button class="color-swatch" type="button" data-style-property="stroke" data-style-value="#2f9e44" aria-label="Green"></button>
+                <button class="color-swatch" type="button" data-style-property="stroke" data-style-value="#1971c2" aria-label="Blue"></button>
+                <button class="color-swatch" type="button" data-style-property="stroke" data-style-value="#f08c00" aria-label="Orange"></button>
+                <button class="color-swatch" type="button" data-style-property="stroke" data-style-value="#ffffff" aria-label="White"></button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="text-color">
+            <h2>Text color</h2>
+            <div class="style-options color-options" role="group" aria-label="Text color">
+                <button class="color-swatch active" type="button" data-style-property="textColor" data-style-value="#1e1e1e" aria-label="Black text"></button>
+                <button class="color-swatch" type="button" data-style-property="textColor" data-style-value="#e03131" aria-label="Red text"></button>
+                <button class="color-swatch" type="button" data-style-property="textColor" data-style-value="#2f9e44" aria-label="Green text"></button>
+                <button class="color-swatch" type="button" data-style-property="textColor" data-style-value="#1971c2" aria-label="Blue text"></button>
+                <button class="color-swatch" type="button" data-style-property="textColor" data-style-value="#f08c00" aria-label="Orange text"></button>
+                <button class="color-swatch" type="button" data-style-property="textColor" data-style-value="#ffffff" aria-label="White text"></button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="background">
+            <h2>Background</h2>
+            <div class="style-options color-options" role="group" aria-label="Background color">
+                <button class="color-swatch transparent-swatch" type="button" data-style-property="fill" data-style-value="transparent" aria-label="Transparent"></button>
+                <button class="color-swatch" type="button" data-style-property="fill" data-style-value="#ffc9c9" aria-label="Light red"></button>
+                <button class="color-swatch" type="button" data-style-property="fill" data-style-value="#b2f2bb" aria-label="Light green"></button>
+                <button class="color-swatch" type="button" data-style-property="fill" data-style-value="#a5d8ff" aria-label="Light blue"></button>
+                <button class="color-swatch" type="button" data-style-property="fill" data-style-value="#ffec99" aria-label="Light yellow"></button>
+                <button class="color-swatch" type="button" data-style-property="fill" data-style-value="#ffffff" aria-label="White background"></button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="fill">
+            <h2>Fill</h2>
+            <div class="style-options" role="group" aria-label="Fill style">
+                <button class="style-button" type="button" data-style-property="fillMode" data-style-value="none" aria-label="No fill">▧</button>
+                <button class="style-button" type="button" data-style-property="fillMode" data-style-value="hachure" aria-label="Hachure fill">▨</button>
+                <button class="style-button active" type="button" data-style-property="fillMode" data-style-value="solid" aria-label="Solid fill">■</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="stroke-width">
+            <h2>Stroke width</h2>
+            <div class="style-options" role="group" aria-label="Stroke width">
+                <button class="style-button" type="button" data-style-property="lineWidth" data-style-value="1.5" aria-label="Thin stroke">−</button>
+                <button class="style-button active" type="button" data-style-property="lineWidth" data-style-value="2.4" aria-label="Medium stroke">━</button>
+                <button class="style-button" type="button" data-style-property="lineWidth" data-style-value="4" aria-label="Thick stroke">▬</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="stroke-style">
+            <h2>Stroke style</h2>
+            <div class="style-options" role="group" aria-label="Stroke style">
+                <button class="style-button active" type="button" data-style-property="strokeDash" data-style-value="solid" aria-label="Solid stroke">—</button>
+                <button class="style-button" type="button" data-style-property="strokeDash" data-style-value="dashed" aria-label="Dashed stroke">---</button>
+                <button class="style-button" type="button" data-style-property="strokeDash" data-style-value="dotted" aria-label="Dotted stroke">····</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="sloppiness">
+            <h2>Sloppiness</h2>
+            <div class="style-options" role="group" aria-label="Stroke roughness">
+                <button class="style-button" type="button" data-style-property="roughness" data-style-value="0.5" aria-label="Low sloppiness">⌁</button>
+                <button class="style-button active" type="button" data-style-property="roughness" data-style-value="1" aria-label="Medium sloppiness">〰</button>
+                <button class="style-button" type="button" data-style-property="roughness" data-style-value="2" aria-label="High sloppiness">≋</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="edges">
+            <h2>Edges</h2>
+            <div class="style-options" role="group" aria-label="Shape edges">
+                <button class="style-button active" type="button" data-style-property="cornerStyle" data-style-value="sharp" aria-label="Sharp edges">□</button>
+                <button class="style-button" type="button" data-style-property="cornerStyle" data-style-value="rounded" aria-label="Rounded edges">▢</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="arrow-type">
+            <h2>Arrow type</h2>
+            <div class="style-options" role="group" aria-label="Arrow type">
+                <button class="style-button" type="button" data-style-property="arrowType" data-style-value="straight" aria-label="Straight arrow">↗</button>
+                <button class="style-button active" type="button" data-style-property="arrowType" data-style-value="curved" aria-label="Curved arrow">↪</button>
+                <button class="style-button" type="button" data-style-property="arrowType" data-style-value="elbow" aria-label="Elbow arrow">⌝</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="arrowheads">
+            <h2>Arrowheads</h2>
+            <div class="style-options" role="group" aria-label="Arrowheads">
+                <button class="style-button" type="button" data-style-property="arrowHeads" data-style-value="none" aria-label="No arrowheads">—</button>
+                <button class="style-button active" type="button" data-style-property="arrowHeads" data-style-value="end" aria-label="Arrowhead at end">→</button>
+                <button class="style-button" type="button" data-style-property="arrowHeads" data-style-value="both" aria-label="Arrowheads at both ends">↔</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="font-family">
+            <h2>Font family</h2>
+            <div class="style-options" role="group" aria-label="Font family">
+                <button class="style-button active" type="button" data-style-property="fontFamily" data-style-value='"Comic Sans MS", "Segoe Print", "Bradley Hand", cursive' aria-label="Handwritten font">✎</button>
+                <button class="style-button" type="button" data-style-property="fontFamily" data-style-value="Arial, sans-serif" aria-label="Sans-serif font">A</button>
+                <button class="style-button" type="button" data-style-property="fontFamily" data-style-value="monospace" aria-label="Monospace font">&lt;/&gt;</button>
+                <button class="style-button" type="button" data-style-property="fontFamily" data-style-value="Georgia, serif" aria-label="Serif font">𝖠</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="font-size">
+            <h2>Font size</h2>
+            <div class="style-options" role="group" aria-label="Font size">
+                <button class="style-button" type="button" data-style-property="fontSize" data-style-value="16">S</button>
+                <button class="style-button active" type="button" data-style-property="fontSize" data-style-value="24">M</button>
+                <button class="style-button" type="button" data-style-property="fontSize" data-style-value="32">L</button>
+                <button class="style-button" type="button" data-style-property="fontSize" data-style-value="48">XL</button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="text-align">
+            <h2>Text align</h2>
+            <div class="style-options" role="group" aria-label="Text alignment">
+                <button class="style-button active" type="button" data-style-property="textAlign" data-style-value="left" aria-label="Align left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 10h11M4 14h16M4 18h11"></path></svg></button>
+                <button class="style-button" type="button" data-style-property="textAlign" data-style-value="center" aria-label="Align center"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 10h10M4 14h16M7 18h10"></path></svg></button>
+                <button class="style-button" type="button" data-style-property="textAlign" data-style-value="right" aria-label="Align right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M9 10h11M4 14h16M9 18h11"></path></svg></button>
+            </div>
+        </section>
+        <section class="style-section" data-style-group="opacity">
+            <label for="opacity-control">Opacity</label>
+            <input id="opacity-control" type="range" min="0" max="100" value="100">
+            <div class="range-labels"><span>0</span><output id="opacity-value" for="opacity-control">100</output></div>
+        </section>
+        <section class="style-section" data-style-group="layers">
+            <h2>Layers</h2>
+            <div class="style-options layer-options" role="group" aria-label="Layer order">
+                <button class="style-button" type="button" data-layer-action="back" aria-label="Send to back" title="Send to back">⇊</button>
+                <button class="style-button" type="button" data-layer-action="backward" aria-label="Send backward" title="Send backward">↓</button>
+                <button class="style-button" type="button" data-layer-action="forward" aria-label="Bring forward" title="Bring forward">↑</button>
+                <button class="style-button" type="button" data-layer-action="front" aria-label="Bring to front" title="Bring to front">⇈</button>
+            </div>
+        </section>
+    </aside>
+
+    <div class="toolbar-shell">
+        <div class="toolbar" role="toolbar" aria-label="Whiteboard tools">
+            <button id="lock-toggle" class="icon-button" type="button" title="Lock canvas" aria-label="Lock canvas">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0"></path><circle cx="12" cy="15" r="1"></circle></svg>
+            </button>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <div class="tool-group">
+                <button data-tool="pan" type="button" title="Hand (H)" aria-label="Hand (H)" class="active">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12V5a1.5 1.5 0 0 1 3 0v6-8a1.5 1.5 0 0 1 3 0v8-6a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v7c0 4-2.5 7-6.5 7h-1c-2 0-3.5-1-4.5-2.5L5 15a1.8 1.8 0 0 1 3-2.1L10 15"></path></svg>
+                    <span class="shortcut">H</span>
+                </button>
+                <button data-tool="select" type="button" title="Select (V)" aria-label="Select (V)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 13 11-6 .5-3 5L5 3Z"></path></svg>
+                    <span class="shortcut">V</span>
+                </button>
+                <button data-tool="rectangle" type="button" title="Rectangle (R)" aria-label="Rectangle (R)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"></rect></svg>
+                    <span class="shortcut">R</span>
+                </button>
+                <button data-tool="diamond" type="button" title="Diamond (D)" aria-label="Diamond (D)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 9-9 9-9-9 9-9Z"></path></svg>
+                    <span class="shortcut">D</span>
+                </button>
+                <button data-tool="ellipse" type="button" title="Ellipse (O)" aria-label="Ellipse (O)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle></svg>
+                    <span class="shortcut">O</span>
+                </button>
+                <button data-tool="arrow" type="button" title="Arrow (A)" aria-label="Arrow (A)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+                    <span class="shortcut">A</span>
+                </button>
+                <button data-tool="line" type="button" title="Line (L)" aria-label="Line (L)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg>
+                    <span class="shortcut">L</span>
+                </button>
+                <button data-tool="pen" type="button" title="Draw (P)" aria-label="Draw (P)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 10-10 4 4L8 21H4v-4Zm9-9 4 4m-1-7 2-2 4 4-2 2"></path></svg>
+                    <span class="shortcut">P</span>
+                </button>
+                <button data-tool="text" type="button" title="Text (T)" aria-label="Text (T)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5V3h16v2M12 3v18m-4 0h8"></path></svg>
+                    <span class="shortcut">T</span>
+                </button>
+                <button data-tool="note" type="button" title="Note (N)" aria-label="Note (N)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v14l-4 4H5V3Zm3 5h8m-8 4h8m-8 4h5m2 5v-4h4"></path></svg>
+                    <span class="shortcut">N</span>
+                </button>
+                <button data-tool="eraser" type="button" title="Freehand eraser (E)" aria-label="Freehand eraser (E)">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 15 10-10a2 2 0 0 1 3 0l5 5a2 2 0 0 1 0 3l-7 7H8l-5-5Zm5 5 8-8m-4-8 8 8"></path></svg>
+                    <span class="shortcut">E</span>
+                </button>
+                <button data-tool="remove" type="button" title="Remove whole object" aria-label="Remove whole object">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m3 4v5m6-5v5"></path></svg>
+                </button>
+            </div>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <button id="more-tools" class="icon-button more-button" type="button" title="More tools" aria-label="More tools" aria-expanded="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+            </button>
+        </div>
+
+        <section id="tools-menu" class="tools-menu" aria-label="More tools">
+            <button class="menu-item" type="button" data-action="insert-image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="9" r="1.5"></circle><path d="m21 15-5-5L5 20"></path></svg><span>Insert image</span><kbd>9</kbd></button>
+            <button class="menu-item" type="button" data-tool="frame"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V4h4m8 0h4v4m0 8v4h-4m-8 0H4v-4M8 12h8m-4-4v8"></path></svg><span>Frame tool</span><kbd>F</kbd></button>
+            <button class="menu-item" type="button" data-action="web-embed"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5-7 7 7 7m8-14 7 7-7 7m-3-16-2 18"></path></svg><span>Web Embed</span></button>
+            <button class="menu-item" type="button" data-action="draw-to-shape"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="5"></circle><rect x="11" y="11" width="10" height="10" rx="1"></rect></svg><span>Draw to shape</span><kbd>Shift+X</kbd></button>
+            <button class="menu-item" type="button" data-tool="laser"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-9 9-6-6 9-9ZM5 3v3M3 5h3m1 5-2 2m6 2-2 2m6 1-2 2"></path></svg><span>Laser pointer</span><kbd>K</kbd></button>
+            <button class="menu-item" type="button" data-tool="bucket"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 11 11-5 5L2 9l5-5Zm-3 7 5-5m5 7 4-4m2 9h.01"></path><path d="M20 14c0 2-2 3-2 3s-2-1-2-3a2 2 0 0 1 4 0Z"></path></svg><span>Bucket fill</span><kbd>B</kbd></button>
+            <button class="menu-item" type="button" data-tool="lasso"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 4-4 7-9 7s-8-2-8-5 4-6 9-6 8 2 8 5Zm-1 4c0 3-2 5-5 5m-3-2 2 4"></path></svg><span>Lasso selection</span></button>
+            <button class="menu-item" type="button" data-tool="remove"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m3 4v5m6-5v5"></path></svg><span>Remove whole object</span></button>
+            <div class="menu-separator"></div>
+            <button class="menu-item" type="button" data-action="undo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-2"></path></svg><span>Undo</span><kbd>Ctrl+Z</kbd></button>
+            <button class="menu-item" type="button" data-action="redo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 14 5-5-5-5m5 5H10a6 6 0 0 0 0 12h2"></path></svg><span>Redo</span><kbd>Ctrl+Shift+Z</kbd></button>
+        </section>
+    </div>
+
+    <input id="image-picker" type="file" accept="image/*" hidden>
+    <div class="zoom-controls" role="group" aria-label="Canvas zoom">
+        <button id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out">−</button>
+        <output id="zoom-level" aria-live="polite">100%</output>
+        <button id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in">+</button>
+    </div>
+    <div class="history-controls" role="group" aria-label="History">
+        <button id="undo" type="button" aria-label="Undo" title="Undo">↶</button>
+        <button id="redo" type="button" aria-label="Redo" title="Redo">↷</button>
+    </div>
+    <div id="embed-dialog" class="modal-overlay" hidden>
+        <form id="embed-form" class="embed-dialog" role="dialog" aria-modal="true" aria-labelledby="embed-title">
+            <h2 id="embed-title">Embed a website</h2>
+            <label for="embed-url">Web address</label>
+            <input id="embed-url" type="url" placeholder="https://example.com" required>
+            <div class="dialog-actions">
+                <button type="button" id="cancel-embed">Cancel</button>
+                <button type="submit">Embed</button>
+            </div>
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
